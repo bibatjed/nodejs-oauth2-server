@@ -1,4 +1,6 @@
 "use strict";
+
+const bcrypt = require("bcrypt");
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     "Users",
@@ -20,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "users",
     }
   );
+
+  User.generateHash = function (password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync());
+  };
 
   return User;
 };
