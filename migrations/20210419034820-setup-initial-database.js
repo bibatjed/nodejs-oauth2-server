@@ -29,18 +29,20 @@ exports.up = async function (db, callback) {
 
   //CREATE users table
   await db.runSql(
-    `CREATE TABLE users (id INT NOT NULL AUTO_INCREMENT, username VARCHAR(100) NULL, password VARCHAR(100) NULL, PRIMARY KEY (id));`
+    `CREATE TABLE users (id INT NOT NULL AUTO_INCREMENT, username VARCHAR(100) NULL, password VARCHAR(100) NULL, created_at datetime NOT NULL, updated_at datetime NOT NULL, deleted_at datetime DEFAULT NULL, PRIMARY KEY (id));`
   );
 
   return callback();
 };
 
-exports.down = async function (db) {
+exports.down = async function (db, callback) {
   await db.dropTable("oauth_clients");
   await db.dropTable("oauth_access_tokens");
   await db.dropTable("oauth_authorization_codes");
   await db.dropTable("oauth_refresh_tokens");
   await db.dropTable("users");
+
+  return callback();
 };
 
 exports._meta = {
