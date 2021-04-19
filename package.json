@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./app/app.js",
     "migrate:up": "db-migrate up --config migrations/migration.config.json -e default -m migrations --migration-table migrations-objects",
-    "migrate:down": "db-migrate down --config migrations/migration.config.json -e default m migrations --migration-table migrations-objects",
+    "migrate:down": "db-migrate down --config migrations/migration.config.json -e default -m migrations --migration-table migrations-objects",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
