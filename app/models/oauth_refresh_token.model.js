@@ -1,10 +1,10 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-    const oAuthAccessToken = sequelize.define(
-        'OAuthAccessToken',
+    const OAuthRefreshToken = sequelize.define(
+        'OAuthRefreshToken',
         {
-            access_token: {
+            refresh_token: {
                 type: DataTypes.STRING,
                 allowNull: false,
                 primaryKey: true,
@@ -18,9 +18,9 @@ module.exports = (sequelize, DataTypes) => {
             timestamps: false,
             paranoid: true,
             underscored: true,
-            tableName: 'oauth_access_tokens',
+            tableName: 'oauth_refresh_tokens',
         }
     );
 
-    return oAuthAccessToken;
+    return OAuthRefreshToken;
 };

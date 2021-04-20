@@ -1,26 +1,26 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-    const oAuthAccessToken = sequelize.define(
-        'OAuthAccessToken',
+    const OAuthClient = sequelize.define(
+        'OAuthClient',
         {
-            access_token: {
+            client_id: {
                 type: DataTypes.STRING,
                 allowNull: false,
                 primaryKey: true,
             },
-            client_id: DataTypes.STRING,
-            user_id: DataTypes.INTEGER,
-            expires: DataTypes.DATE,
+            client_secret: DataTypes.STRING,
+            redirect_uri: DataTypes.STRING,
+            grant_types: DataTypes.JSON,
             scope: DataTypes.STRING,
+            user_id: DataTypes.INTEGER,
         },
         {
             timestamps: false,
-            paranoid: true,
             underscored: true,
-            tableName: 'oauth_access_tokens',
+            tableName: 'oauth_clients',
         }
     );
 
-    return oAuthAccessToken;
+    return OAuthClient;
 };
