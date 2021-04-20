@@ -1,31 +1,35 @@
-"use strict";
+'use strict';
 
-const bcrypt = require("bcrypt");
+const bcrypt = require('bcrypt');
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define(
-    "Users",
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true,
-      },
-      username: DataTypes.STRING,
-      password: DataTypes.STRING,
-    },
-    {
-      freezeTableName: true,
-      timestaps: true,
-      paranoid: true,
-      underscored: true,
-      tableName: "users",
-    }
-  );
+    const User = sequelize.define(
+        'Users',
+        {
+            id: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                primaryKey: true,
+                autoIncrement: true,
+            },
+            username: DataTypes.STRING,
+            password: DataTypes.STRING,
+        },
+        {
+            freezeTableName: true,
+            timestamps: true,
+            paranoid: true,
+            underscored: true,
+            tableName: 'users',
+        }
+    );
 
-  User.generateHash = function (password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync());
-  };
+    User.generateHash = function (password) {
+        return bcrypt.hashSync(password, bcrypt.genSaltSync());
+    };
 
-  return User;
+    User.prototype.validatePassword = async function (password) {
+        return bcrypt.compare(password, this.password);
+    };
+
+    return User;
 };

@@ -1,9 +1,9 @@
 {
-  "default": {
-    "host": {"ENV": "DB_HOST"},
-    "user": {"ENV": "DB_USER"},
-    "password": {"ENV": "DB_PASSWORD"},
-    "database": {"ENV": "DB_DEFAULT"},
-    "driver": "mysql"
-  }
+    "default": {
+        "host": { "ENV": "DB_HOST" },
+        "user": { "ENV": "DB_USER" },
+        "password": { "ENV": "DB_PASSWORD" },
+        "database": { "ENV": "DB_DEFAULT" },
+        "driver": "mysql"
+    }
 }
