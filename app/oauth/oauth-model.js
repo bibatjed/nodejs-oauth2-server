@@ -1,6 +1,9 @@
 const models = require('../models');
 
 const { OAuthError } = require('oauth2-server');
+/**
+ * Convert all separate calls to associate calls(JOIN TABLES)
+ */
 
 module.exports.getAccessToken = async (accessToken) => {
     try {
@@ -10,20 +13,20 @@ module.exports.getAccessToken = async (accessToken) => {
 
         if (!accessTokenResult) return false;
 
-        const {
-            access_token,
-            expires_at,
-            scope,
-            client,
-            user,
-        } = accessTokenResult;
+        const { access_token, expires, scope, client } = accessTokenResult;
+
+        const userResult = await models.Users.findOne({
+            where: { id: accessTokenResult.user_id },
+            attributes: { exclude: ['password'] },
+            raw: true,
+        });
 
         return {
             accessToken: access_token,
-            accessaccessTokenResultExpiresAt: expires_at,
+            accessTokenExpiresAt: expires,
             scope: scope,
             client: client,
-            user: user,
+            user: userResult,
         };
     } catch (e) {
         return false;
