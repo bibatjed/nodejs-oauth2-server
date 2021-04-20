@@ -16,10 +16,13 @@ module.exports = (sequelize, DataTypes) => {
         },
         {
             freezeTableName: true,
-            timestamps: true,
             paranoid: true,
+            timestamps: true,
             underscored: true,
             tableName: 'users',
+            createdAt: 'created_at',
+            updatedAt: 'updated_at',
+            deletedAt: 'deleted_at',
         }
     );
 
