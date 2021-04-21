@@ -97,25 +97,33 @@ module.exports.getClient = async (clientId, clientSecret) => {
 module.exports.getRefreshToken = async (refreshToken) => {
     const refreshTokenResult = await models.OAuthRefreshToken.findOne({
         where: { refresh_token: refreshToken },
+        raw: true,
     });
 
     if (!refreshTokenResult) {
         return false;
     }
 
+
     const userResult = await models.Users.findOne({
         where: { id: refreshTokenResult.user_id },
+        raw: true,
     });
 
     const clientResult = await models.OAuthClient.findOne({
         where: { client_id: refreshTokenResult.client_id },
+        raw: true,
     });
+
+    const client = { ...clientResult, id: clientResult.client_id };
+
+    console.log(client);
 
     return {
         refreshToken: refreshTokenResult.refresh_token,
-        refreshTokenExpiresAt: refreshTokenResult.expires_at,
-        scope: token.scope,
-        client: clientResult,
+        refreshTokenExpiresAt: refreshTokenResult.expires,
+        scope: refreshTokenResult.scope,
+        client: client,
         user: userResult,
     };
 };
@@ -124,6 +132,7 @@ module.exports.revokeToken = async (token) => {
     const refreshTokenDestroy = await models.OAuthRefreshToken.destroy({
         where: { refresh_token: token.refreshToken },
     });
+
     return refreshTokenDestroy;
 };
 
